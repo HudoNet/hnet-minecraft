@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  hudonet-minecraft-forge-1.7.10:
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
+      args:
+        - MINECRAFT_FORGE_VERSION=1.7.10
+        - FULL_MINECRAFT_FORGE_VERSION=1.7.10-10.13.4.1614-1.7.10
+    image: hudonet/mc-forge-server:0.0.1
+    container_name: hudonet-minecraft-forge-1.7.10-server
+    command: ["java", "-Xms1G", "-Xmx2G", "-jar", "minecraft_server.jar", "nogui"]
+    volumes:
+      - hnet-mc-hcforge:/opt/hudonet/minecraft/1.7.10
+    networks:
+      - hudonet
+    ports:
+        - "25565:25565"
+        - "25575:25575"
+
+volumes:
+    hnet-mc-hcforge:
+
+networks:
+  hudonet:
+    driver: bridge
